@@ -103,18 +103,4 @@ CREATE TABLE IF NOT EXISTS `square_comments` (
   CONSTRAINT `square_comments_ibfk_3` FOREIGN KEY (`parent_id`) REFERENCES `square_comments` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='评论表';
 
--- ==========================================
--- 初始化数据（可选）
--- ==========================================
 
--- 插入默认管理员账号（密码：111111，已用 bcrypt 加密）
-INSERT INTO `ev_users` (`username`, `password`, `nickname`, `email`, `role`) 
-VALUES ('超时空辉夜姬', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', '超时空辉夜姬', 'admin@bobo-blog.com', 'admin')
-ON DUPLICATE KEY UPDATE `username` = `username`;
-
--- 插入默认文章分类
-INSERT INTO `ev_article_cate` (`cate_name`) VALUES 
-  ('技术分享'),
-  ('生活随笔'),
-  ('学习笔记')
-ON DUPLICATE KEY UPDATE `cate_name` = `cate_name`;
