@@ -1,0 +1,24 @@
+# 依赖目录（容器内会重新安装）
+node_modules
+
+# 构建产物（由容器内构建生成）
+dist
+
+# 日志
+*.log
+
+# 环境变量文件
+.env
+.env.*
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# Git
+.git
+.gitignore
+
+# Docker 自身文件
+Dockerfile
+.dockerignore

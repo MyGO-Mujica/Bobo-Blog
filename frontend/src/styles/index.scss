@@ -1,0 +1,116 @@
+
+// 字体导入
+@import url('https://fonts.googleapis.com/css2?family=ZCOOL+XiaoWei&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Liu+Jian+Mao+Cao&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Zhi+Mang+Xing&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&display=swap');
+
+// 废土风格 - 基础颜色变量
+:root {
+  // 主色调 - 黑白灰
+  --wasteland-black: #635a5a;
+  --wasteland-dark-gray: #353232;
+  --wasteland-gray: #4a4a4a;
+  --wasteland-light-gray: #6a6a6a;
+  --wasteland-off-white: #e8e8e8;
+  --wasteland-white: #f5f5f5;
+  
+  // 强调色
+  --wasteland-rust: #b8754a;
+  --wasteland-orange: #ff8c66;
+  
+  // 覆盖 Element Plus 主要颜色
+  --el-color-primary: var(--wasteland-black);
+  --el-color-success: #6b8553;
+  --el-color-warning: #a68520;
+  --el-color-danger: #8a3333;
+  --el-color-info: var(--wasteland-gray);
+}
+
+body {
+  margin: 0;
+  background-color: var(--wasteland-off-white);
+  font-family: sans-serif;
+  color: var(--wasteland-black);
+}
+
+// 废土风格按钮样式
+.el-button {
+  font-weight: 600 ;
+  transition: all 0.3s ease;
+  
+  // 默认按钮样式（重置按钮等）
+  &:not(.el-button--primary):not(.el-button--success):not(.el-button--warning):not(.el-button--danger):not(.el-button--info) {
+    background: var(--wasteland-white) ;
+    border-color: var(--wasteland-black) ;
+    color: var(--wasteland-black) ;
+    
+    &:hover {
+      background: var(--wasteland-black) ;
+      border-color: var(--wasteland-black) ;
+      color: var(--wasteland-white) ;
+    }
+  }
+  
+  &.el-button--primary {
+    background: var(--wasteland-black) ;
+    border-color: var(--wasteland-black) ;
+    color: var(--wasteland-white) ;
+
+    &:hover {
+      background: var(--wasteland-white) ;
+      border-color: var(--wasteland-black) ;
+      color: var(--wasteland-black) ;
+    }
+  }
+  
+  &.el-button--success {
+    background: #4a5c3a ;
+    border-color: #4a5c3a ;
+    color: var(--wasteland-white) ;
+
+    &:hover {
+      background: var(--wasteland-white) ;
+      border-color: #4a5c3a ;
+      color: #4a5c3a ;
+    }
+  }
+  
+  &.el-button--warning {
+    background: #7a5f00 ;
+    border-color: #7a5f00 ;
+    color: var(--wasteland-white) ;
+
+    &:hover {
+      background: var(--wasteland-white) ;
+      border-color: #7a5f00 ;
+      color: #7a5f00 ;
+    }
+  }
+  
+  &.el-button--danger {
+    background: #ae6262 ;
+    border-color: #5c1a1a ;
+    color: var(--wasteland-white) ;
+
+    &:hover {
+      background: var(--wasteland-white) ;
+      border-color: #5c1a1a ;
+      color: #5c1a1a ;
+    }
+  }
+  
+  &.el-button--info {
+    background: var(--wasteland-gray) ;
+    border-color: var(--wasteland-gray) ;
+    color: var(--wasteland-white) ;
+
+    &:hover {
+      background: var(--wasteland-white) ;
+      border-color: var(--wasteland-gray) ;
+      color: var(--wasteland-gray) ;
+    }
+  }
+}

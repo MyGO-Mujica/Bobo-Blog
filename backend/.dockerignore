@@ -1,0 +1,26 @@
+# 依赖目录
+# node_modules
+
+# 日志
+*.log
+npm-debug.log*
+
+# 上传的文件（应挂载为数据卷，不打进镜像）
+uploads/*
+!uploads/.gitkeep
+
+# 环境变量文件（包含敏感信息，绝不打进镜像）
+.env
+.env.*
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# Git
+.git
+.gitignore
+
+# Docker 自身文件（无需打包进镜像）
+Dockerfile
+.dockerignore
