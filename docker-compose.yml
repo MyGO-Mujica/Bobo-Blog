@@ -1,0 +1,100 @@
+version: "3.8"
+
+services:
+  # ==========================================
+  # MySQL 数据库服务
+  # ==========================================
+  db:
+    image: mysql:8.0
+    container_name: bobo-blog-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      TZ: Asia/Shanghai
+    volumes:
+      # 数据持久化：MySQL 数据目录挂载到宿主机
+      - mysql_data:/var/lib/mysql
+      # 初始化脚本：首次启动时自动执行 mysql/init/ 下的 .sql 文件
+      - ./mysql/init:/docker-entrypoint-initdb.d
+    # ports:
+    # 仅用于本地调试，生产环境可删除此行（后端通过容器名访问，无需暴露端口）
+    # - "3306:3306"
+    networks:
+      - bobo-network
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "mysqladmin",
+          "ping",
+          "-h",
+          "localhost",
+          "-u",
+          "root",
+          "-p${DB_PASSWORD}",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ==========================================
+  # 后端 Node.js 服务
+  # ==========================================
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: bobo-blog-backend
+    restart: unless-stopped
+    environment:
+      # 数据库连接配置（通过容器名 "db" 访问 MySQL）
+      DB_HOST: db
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
+      # JWT 密钥（生产环境必须设置为强随机字符串）
+      JWT_SECRET: ${JWT_SECRET}
+      NODE_ENV: production
+    volumes:
+      # 用户上传文件持久化（挂载到宿主机，避免容器重启丢失）
+      - ./backend/uploads:/app/uploads
+    # ports:
+    # 仅用于本地调试，生产环境删除此行（前端通过 Nginx 代理访问）
+    # - "3007:3007"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - bobo-network
+
+  # ==========================================
+  # 前端 Nginx 服务
+  # ==========================================
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: bobo-blog-frontend
+    restart: unless-stopped
+    ports:
+      # 对外暴露 80 端口，用户通过 http://localhost 访问
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - bobo-network
+
+# ==========================================
+# Docker 网络配置
+# ==========================================
+networks:
+  bobo-network:
+    driver: bridge
+
+# ==========================================
+# 数据卷（持久化存储）
+# ==========================================
+volumes:
+  mysql_data:
+    driver: local
